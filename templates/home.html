@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ClubCentral - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        .sidebar {
+            background-color: #007BFF;
+            color: white;
+            width: 20%;
+            height: 100vh;
+            position: fixed;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar h1 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: #0056b3;
+        }
+        .main {
+            margin-left: 20%;
+            padding: 20px;
+            box-sizing: border-box;
+            width: 80%;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header form {
+            display: flex;
+            width: 50%;
+        }
+        .header form input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .header form input[type="submit"] {
+            padding: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .header form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .post, .feed, .events {
+            margin-top: 20px;
+        }
+        .post form textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .post form input[type="file"] {
+            margin-right: 10px;
+        }
+        .post form input[type="submit"] {
+            padding: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .post form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        /* Add more styles for .feed and .events */
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1>ClubCentral</h1>
+        <a href="/home">Home</a>
+        <a href="/community">My Community</a>
+        <a href="/messages">Messages</a>
+        <a href="/notifications">Notifications</a>
+        <a href="/profile">Profile</a>
+        <a href="/calendar">Calendar</a>
+        <a href="/settings">Settings</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <h2>Hi, {{ user.name }}!</h2>
+            <form>
+                <input type="text" placeholder="Search..." />
+                <input type="submit" value="Search" />
+            </form>
+        </div>
+
+        <div class="post">
+            <form>
+                <textarea placeholder="Start a post..."></textarea>
+                <input type="file" name="photo" />
+                <input type="file" name="video" />
+                <input type="submit" value="Post" />
+            </form>
+        </div>
+
+        <div class="feed">
+            <!-- You would loop through the user's posts here -->
+            <!-- The specifics of this will depend on how you set up your back end -->
+        </div>
+
+        <div class="events">
+            <!-- You would loop through the user's upcoming events here -->
+            <!-- The specifics of this will depend on how you set up your back end -->
+        </div>
+    </div>
+</body>
+</html>
