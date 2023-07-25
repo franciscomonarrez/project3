@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ClubCentral - Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 p-3">
+                <h1>ClubCentral</h1>
+                <div class="list-group">
+                    <a href="/home" class="list-group-item list-group-item-action">Home</a>
+                    <a href="/community" class="list-group-item list-group-item-action">My Community</a>
+                    <a href="/messages" class="list-group-item list-group-item-action">Messages</a>
+                    <a href="/notifications" class="list-group-item list-group-item-action">Notifications</a>
+                    <a href="/profile" class="list-group-item list-group-item-action active">Profile</a>
+                    <a href="/calendar" class="list-group-item list-group-item-action">Calendar</a>
+                    <a href="/settings" class="list-group-item list-group-item-action">Settings</a>
+                    <a href="/logout" class="list-group-item list-group-item-action">Logout</a>
+                </div>
+            </div>
+
+            <div class="col-md-9 p-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Profile: {{ user.name }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="/profile" method="POST">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" id="name" class="form-control" value="{{ user.name }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dob">Date of Birth</label>
+                                <input type="date" name="dob" id="dob" class="form-control" value="{{ user.dob }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="email" class="form-control" value="{{ user.email }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bio">Biography</label>
+                                <textarea name="bio" id="bio" class="form-control">{{ user.bio }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="interests">Interests</label>
+                                <textarea name="interests" id="interests" class="form-control">{{ user.interests }}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Profile</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <a href="/home">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

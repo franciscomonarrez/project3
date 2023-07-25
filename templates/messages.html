@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ClubCentral - Messages</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .message-container {
+            max-height: 400px;
+            overflow-y: scroll;
+        }
+        .collapsed-conversation {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 p-3">
+                <h1>ClubCentral</h1>
+                <div class="list-group">
+                    <a href="/home" class="list-group-item list-group-item-action">Home</a>
+                    <a href="/community" class="list-group-item list-group-item-action">My Community</a>
+                    <a href="/messages" class="list-group-item list-group-item-action active">Messages</a>
+                    <a href="/notifications" class="list-group-item list-group-item-action">Notifications</a>
+                    <a href="/profile" class="list-group-item list-group-item-action">Profile</a>
+                    <a href="/calendar" class="list-group-item list-group-item-action">Calendar</a>
+                    <a href="/settings" class="list-group-item list-group-item-action">Settings</a>
+                    <a href="/logout" class="list-group-item list-group-item-action">Logout</a>
+                </div>
+            </div>
+
+            <div class="col-md-9 p-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Messages</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="message-container">
+                            <ul class="list-group" id="message_list">
+                                <!-- Random conversation with John Doe -->
+                                <li class="list-group-item message-list-item" data-toggle="collapse" href="#john_doe_conversation" onclick="toggleConversation('john_doe_conversation')">
+                                    <h5><a href="/view_conversation/john_doe">John Doe</a></h5>
+                                    <small>July 24, 2023</small>
+                                </li>
+                                <div class="collapse" id="john_doe_conversation">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <h5>John Doe</h5>
+                                            <p>Hello there! How are you doing?</p>
+                                            <small>July 24, 2023</small>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h5>You</h5>
+                                            <p>Hi John Doe, I'm doing great. Thanks for asking!</p>
+                                            <small>July 25, 2023</small>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h5>John Doe</h5>
+                                            <p>That's wonderful to hear! How can I assist you today?</p>
+                                            <small>July 26, 2023</small>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Conversation with Golf Club -->
+                                <li class="list-group-item message-list-item" data-toggle="collapse" href="#golf_club_conversation" onclick="toggleConversation('golf_club_conversation')">
+                                    <h5><a href="/view_conversation/golf_club">Golf Club</a></h5>
+                                    <small>July 24, 2023</small>
+                                </li>
+                                <div class="collapse" id="golf_club_conversation">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <h5>Golf Club</h5>
+                                            <p>Hey there, we have a golf tournament coming up next week. Are you joining?</p>
+                                            <small>July 24, 2023</small>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h5>You</h5>
+                                            <p>Hi Golf Club, I would love to join the tournament! Can you share more details?</p>
+                                            <small>July 25, 2023</small>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h5>Golf Club</h5>
+                                            <p>Sure! The tournament will be held on August 1st at Green Valley Golf Course.</p>
+                                            <p>Shotgun start at 8:00 AM. Don't forget to bring your clubs!</p>
+                                            <small>July 26, 2023</small>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Conversation with Alice -->
+                                <li class="list-group-item message-list-item" data-toggle="collapse" href="#alice_conversation" onclick="toggleConversation('alice_conversation')">
+                                    <h5><a href="/view_conversation/alice">Alice</a></h5>
+                                    <small>July 27, 2023</small>
+                                </li>
+                                <div class="collapse" id="alice_conversation">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <h5>Alice</h5>
+                                            <p>Hi, do you have any plans for the weekend?</p>
+                                            <small>July 27, 2023</small>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h5>You</h5>
+                                            <p>Hi Alice, I'm thinking of going to the movies on Saturday. Want to join?</p>
+                                            <small>July 27, 2023</small>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h5>Alice</h5>
+                                            <p>Sure, that sounds like fun! Let's meet at the theater at 7:00 PM.</p>
+                                            <small>July 28, 2023</small>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Conversation with Soccer Club -->
+                                <li class="list-group-item message-list-item" data-toggle="collapse" href="#soccer_club_conversation" onclick="toggleConversation('soccer_club_conversation')">
+                                    <h5><a href="/view_conversation/soccer_club">Soccer Club</a></h5>
+                                    <small>July 28, 2023</small>
+                                </li>
+                                <div class="collapse" id="soccer_club_conversation">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <h5>Soccer Club</h5>
+                                            <p>Hey, we have a friendly soccer match this Sunday. Are you interested?</p>
+                                            <small>July 28, 2023</small>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h5>You</h5>
+                                            <p>Hi Soccer Club, count me in! What time and where is the match?</p>
+                                            <small>July 29, 2023</small>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <h5>Soccer Club</h5>
+                                            <p>Great! The match will be at the community park at 10:00 AM.</p>
+                                            <p>Make sure to bring your soccer gear!</p>
+                                            <small>July 30, 2023</small>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </ul>
+                        </div>
+                        <form id="message_form" class="mt-3">
+                            <div class="form-group">
+                                <textarea class="form-control" id="message_content" placeholder="Type your message..." rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form>
+                        <div class="mt-3">
+                            <h4>Search for People or Clubs to Message</h4>
+                            <form id="search_form">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="search_query" placeholder="Search...">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function toggleConversation(conversationId) {
+            $("#" + conversationId).collapse('toggle');
+        }
+
+        $(document).ready(function() {
+            $('#message_form').on('submit', function(e) {
+                e.preventDefault();
+                var messageContent = $('#message_content').val().trim();
+                if (messageContent) {
+                    // You can implement the functionality to send messages here
+                    alert('Message sent: ' + messageContent);
+                    $('#message_content').val('');
+                }
+            });
+
+            $('#search_form').on('submit', function(e) {
+                e.preventDefault();
+                var searchQuery = $('#search_query').val().trim();
+                if (searchQuery) {
+                    // You can implement the search functionality here
+                    alert('Search query: ' + searchQuery);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

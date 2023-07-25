@@ -10,16 +10,29 @@
             width: 100%;
         }
         #calendar th {
-            background-color: #4CAF50;
+            background-color: #007BFF;
             color: white;
         }
         #calendar td {
-            background-color: #f9f9f9;
+            background-color: #f1f1f1;
             text-align: center;
         }
         #calendar .today {
-            background-color: #ff5722;
+            background-color: #0056b3;
             color: white;
+        }
+        .btn-back {
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            color: white;
+            background-color: #007BFF;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn-back:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -109,6 +122,6 @@
             showCalendar(currentMonth, currentYear);
         });
     </script>
-  <button onclick="window.location.href='{{ url_for('home') }}';">Back to Home</button>
+    <button class="btn-back" onclick="window.location.href='{{ url_for('home') }}';">Back to Home</button>
 </body>
 </html>

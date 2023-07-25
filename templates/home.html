@@ -2,141 +2,283 @@
 <html>
 <head>
     <title>ClubCentral - Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f1f1f1;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-        }
-        .sidebar {
-            background-color: #007BFF;
-            color: white;
-            width: 20%;
-            height: 100vh;
-            position: fixed;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .sidebar h1 {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .sidebar a:hover {
-            background-color: #0056b3;
-        }
-        .main {
-            margin-left: 20%;
-            padding: 20px;
-            box-sizing: border-box;
-            width: 80%;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header form {
-            display: flex;
-            width: 50%;
-        }
-        .header form input[type="text"] {
-            flex-grow: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-        }
-        .header form input[type="submit"] {
-            padding: 10px;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .header form input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-        .post, .feed, .events {
-            margin-top: 20px;
-        }
-        .post form textarea {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        .post form input[type="file"] {
-            margin-right: 10px;
-        }
-        .post form input[type="submit"] {
-            padding: 10px;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .post form input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-        /* Add more styles for .feed and .events */
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <div class="sidebar">
-        <h1>ClubCentral</h1>
-        <a href="/home">Home</a>
-        <a href="/community">My Community</a>
-        <a href="/messages">Messages</a>
-        <a href="/notifications">Notifications</a>
-        <a href="/profile">Profile</a>
-        <a href="/calendar">Calendar</a>
-        <a href="/settings">Settings</a>
-        <a href="/logout">Logout</a>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 p-3">
+                <h1>ClubCentral</h1>
+                <div class="list-group">
+                    <a href="/home" class="list-group-item list-group-item-action active">Home</a>
+                    <a href="/community" class="list-group-item list-group-item-action">My Community</a>
+                    <a href="/messages" class="list-group-item list-group-item-action">Messages</a>
+                    <a href="/notifications" class="list-group-item list-group-item-action">Notifications</a>
+                    <a href="/profile" class="list-group-item list-group-item-action">Profile</a>
+                    <a href="/calendar" class="list-group-item list-group-item-action">Calendar</a>
+                    <a href="/settings" class="list-group-item list-group-item-action">Settings</a>
+                    <a href="/logout" class="list-group-item list-group-item-action">Logout</a>
+                </div>
+
+                <div class="recommendations mt-4">
+                    <h3>Club and Organization Recommendations</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-group">
+                                <!-- Add club and organization recommendations here -->
+                                <li class="list-group-item" id="golf_club_li">
+                                    <a href="/golf_club">Golf Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="golf_club_not_interested" onclick="processClub('golf_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="golf_club_join" onclick="processClub('golf_club', true)">Join</a>
+                                </li>
+                                <li class="list-group-item" id="surf_club_li">
+                                    <a href="/surf_club">Surf Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="surf_club_not_interested" onclick="processClub('surf_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="surf_club_join" onclick="processClub('surf_club', true)">Join</a>
+                                </li>
+                                <li class="list-group-item" id="latinx_club_li">
+                                    <a href="/latinx_club">Latinx Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="latinx_club_not_interested" onclick="processClub('latinx_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="latinx_club_join" onclick="processClub('latinx_club', true)">Join</a>
+                                </li>
+                                <li class="list-group-item" id="african_american_club_li">
+                                    <a href="/african_american_club">African American Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="african_american_club_not_interested" onclick="processClub('african_american_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="african_american_club_join" onclick="processClub('african_american_club', true)">Join</a>
+                                </li>
+                                <!-- Add more club and organization recommendations here -->
+                                <li class="list-group-item" id="chess_club_li">
+                                    <a href="/chess_club">Chess Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="chess_club_not_interested" onclick="processClub('chess_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="chess_club_join" onclick="processClub('chess_club', true)">Join</a>
+                                </li>
+                                <li class="list-group-item" id="photography_club_li">
+                                    <a href="/photography_club">Photography Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="photography_club_not_interested" onclick="processClub('photography_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="photography_club_join" onclick="processClub('photography_club', true)">Join</a>
+                                </li>
+                                <li class="list-group-item" id="drama_club_li">
+                                    <a href="/drama_club">Drama Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="drama_club_not_interested" onclick="processClub('drama_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="drama_club_join" onclick="processClub('drama_club', true)">Join</a>
+                                </li>
+                                <li class="list-group-item" id="music_club_li">
+                                    <a href="/music_club">Music Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="music_club_not_interested" onclick="processClub('music_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="music_club_join" onclick="processClub('music_club', true)">Join</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group">
+                                <!-- Add more club and organization recommendations here -->
+                                <li class="list-group-item" id="robotics_club_li">
+                                    <a href="/robotics_club">Robotics Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="robotics_club_not_interested" onclick="processClub('robotics_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="robotics_club_join" onclick="processClub('robotics_club', true)">Join</a>
+                                </li>
+                                <li class="list-group-item" id="debate_club_li">
+                                    <a href="/debate_club">Debate Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="debate_club_not_interested" onclick="processClub('debate_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="debate_club_join" onclick="processClub('debate_club', true)">Join</a>
+                                </li>
+                                <li class="list-group-item" id="volunteering_club_li">
+                                    <a href="/volunteering_club">Volunteering Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="volunteering_club_not_interested" onclick="processClub('volunteering_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="volunteering_club_join" onclick="processClub('volunteering_club', true)">Join</a>
+                                </li>
+                                <li class="list-group-item" id="programming_club_li">
+                                    <a href="/programming_club">Programming Club</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right ml-1" id="programming_club_not_interested" onclick="processClub('programming_club', false)">Not Interested</a> 
+                                    <a href="#" class="btn btn-primary btn-sm float-right" id="programming_club_join" onclick="processClub('programming_club', true)">Join</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 p-3">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h2>Hi, {{ user.name }}!</h2>
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
+                            <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <div class="post">
+                            <form id="post_form">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="post_content" placeholder="Start a post..." rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary" id="start_live_video">Start a Live Video</button>
+                                </div>
+                                <div class="form-group">
+                                    <label for="video_upload">Upload Video:</label>
+                                    <input type="file" class="form-control-file" name="video" id="video_upload">
+                                </div>
+                                <div class="form-group">
+                                    <label for="image_upload">Upload Image:</label>
+                                    <input type="file" class="form-control-file" name="photo" id="image_upload">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Post</button>
+                            </form>
+                        </div>
+
+
+
+                        <div class="feed mt-4">
+                            <!-- User's posts go here -->
+                            {% for club in user.joined_clubs %}
+                                {% if club == 'golf_club' %}
+                                    {% for post in golf_club_posts %}
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ post.author }}</h5>
+                                                <p class="card-text">{{ post.content }}</p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% elif club == 'surf_club' %}
+                                    {% for post in surf_club_posts %}
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ post.author }}</h5>
+                                                <p class="card-text">{{ post.content }}</p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 p-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Upcoming Events</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">ClubCentral Kickoff Party</h5>
+                                <p class="mb-1">August 15, 2023</p>
+                                <small>6:00 PM - 9:00 PM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">Latinx Club Salsa Night</h5>
+                                <p class="mb-1">August 20, 2023</p>
+                                <small>7:00 PM - 11:00 PM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">Golf Club Tournament</h5>
+                                <p class="mb-1">August 25, 2023</p>
+                                <small>8:00 AM - 2:00 PM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">African American Club Movie Night</h5>
+                                <p class="mb-1">September 5, 2023</p>
+                                <small>6:30 PM - 9:00 PM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">Surf Club Beach Bonanza</h5>
+                                <p class="mb-1">September 10, 2023</p>
+                                <small>12:00 PM - 4:00 PM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">Latinx Club Language Exchange</h5>
+                                <p class="mb-1">September 15, 2023</p>
+                                <small>5:00 PM - 7:00 PM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">African American Club Leadership Workshop</h5>
+                                <p class="mb-1">September 20, 2023</p>
+                                <small>4:30 PM - 6:30 PM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">Golf Club Practice Session</h5>
+                                <p class="mb-1">September 25, 2023</p>
+                                <small>9:00 AM - 11:00 AM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">Latinx Club Cultural Fiesta</h5>
+                                <p class="mb-1">October 5, 2023</p>
+                                <small>6:00 PM - 10:00 PM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">African American Club Networking Event</h5>
+                                <p class="mb-1">October 15, 2023</p>
+                                <small>7:00 PM - 9:00 PM</small>
+                            </a>
+                            <!-- Add more events here -->
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">Photography Club Exhibition</h5>
+                                <p class="mb-1">October 20, 2023</p>
+                                <small>5:00 PM - 8:00 PM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">Debate Club Debate Tournament</h5>
+                                <p class="mb-1">October 25, 2023</p>
+                                <small>9:00 AM - 5:00 PM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">Volunteering Club Cleanup Drive</h5>
+                                <p class="mb-1">November 5, 2023</p>
+                                <small>10:00 AM - 1:00 PM</small>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <h5 class="mb-1">Programming Club Hackathon</h5>
+                                <p class="mb-1">November 15, 2023</p>
+                                <small>10:00 AM - 6:00 PM</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="main">
-        <div class="header">
-            <h2>Hi, {{ user.name }}!</h2>
-            <form>
-                <input type="text" placeholder="Search..." />
-                <input type="submit" value="Search" />
-            </form>
-        </div>
+    <script>
+        $(document).ready(function() {
+            $('#post_form').on('submit', function(e) {
+                e.preventDefault();
 
-        <div class="post">
-            <form>
-                <textarea placeholder="Start a post..."></textarea>
-                <input type="file" name="photo" />
-                <input type="file" name="video" />
-                <input type="submit" value="Post" />
-            </form>
-        </div>
+                var postContent = $('#post_content').val();
+                if (postContent) {
+                    $.post('/post', { content: postContent }, function(data) {
+                        var newPost = '<div class="card">' +
+                                          '<div class="card-body">' +
+                                              '<h5 class="card-title">' + data.author + '</h5>' +
+                                              '<p class="card-text">' + data.content + '</p>' +
+                                          '</div>' +
+                                      '</div>';
+                        $('.feed').prepend(newPost);
+                        $('#post_form')[0].reset();
+                    });
+                }
+            });
+        });
 
-        <div class="feed">
-            <!-- You would loop through the user's posts here -->
-            <!-- The specifics of this will depend on how you set up your back end -->
-        </div>
+        function processClub(clubId, join) {
+            var clubElement = document.getElementById(clubId + '_li');
+            clubElement.style.display = "none";
 
-        <div class="events">
-            <!-- You would loop through the user's upcoming events here -->
-            <!-- The specifics of this will depend on how you set up your back end -->
-        </div>
-    </div>
+            var url = join ? '/join' : '/notInterested';
+            $.post(url, { 'club_id': clubId }, function() {
+                if (join) {
+                    var joinedClubs = JSON.parse(localStorage.getItem('joinedClubs') || '[]');
+                    joinedClubs.push(clubId);
+                    localStorage.setItem('joinedClubs', JSON.stringify(joinedClubs));
+                }
+                alert('Successfully processed club!');
+            });
+        }
+    </script>
 </body>
 </html>

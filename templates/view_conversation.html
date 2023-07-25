@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ClubCentral - Conversation with {{ sender }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 p-3">
+                <h1>ClubCentral</h1>
+                <div class="list-group">
+                    <a href="/home" class="list-group-item list-group-item-action">Home</a>
+                    <a href="/community" class="list-group-item list-group-item-action">My Community</a>
+                    <a href="/messages" class="list-group-item list-group-item-action active">Messages</a>
+                    <a href="/notifications" class="list-group-item list-group-item-action">Notifications</a>
+                    <a href="/profile" class="list-group-item list-group-item-action">Profile</a>
+                    <a href="/calendar" class="list-group-item list-group-item-action">Calendar</a>
+                    <a href="/settings" class="list-group-item list-group-item-action">Settings</a>
+                    <a href="/logout" class="list-group-item list-group-item-action">Logout</a>
+                </div>
+            </div>
+
+            <div class="col-md-9 p-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Conversation with {{ sender }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="message-container">
+                            <ul class="list-group" id="message_list">
+                                {% for message in conversation %}
+                                    <li class="list-group-item">
+                                        <h5>{{ message.sender }}</h5>
+                                        <p>{{ message.message }}</p>
+                                        <small>{{ message.date }}</small>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <form id="message_form" class="mt-3" method="post" action="{{ url_for('view_conversation', sender=sender) }}">
+                            <div class="form-group">
+                                <textarea class="form-control" id="message_content" name="message_content" placeholder="Type your message..." rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form>
+                        <div class="mt-3">
+                            <a href="{{ url_for('messages') }}" class="btn btn-secondary">Go Back to My Messages</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
+</html>

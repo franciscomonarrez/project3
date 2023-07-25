@@ -2,79 +2,55 @@
 <html>
 <head>
     <title>ClubCentral - Sign Up</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #007BFF;
-            color: white;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .container {
-            text-align: center;
-            padding: 20px;
-            background: #6C757D;
-            border-radius: 10px;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.19), 0px 6px 6px rgba(0, 0, 0, 0.23);
-        }
-        h1, p {
-            margin-bottom: 30px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            color: white;
-            background-color: #007BFF;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-        input[type="text"], input[type="date"], input[type="email"], input[type="password"] {
-            margin: 10px 0;
-            padding: 10px;
-            width: 200px;
-        }
-        /* Added styles for flash messages */
-        .alert {
-            padding: 10px;
-            background-color: #f44336; /* Red */
-            color: white;
-            margin-bottom: 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Join ClubCentral!</h1>
-        <!-- Flash messages -->
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert">
-                        {{ message }}
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6 p-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="text-center">Join ClubCentral!</h1>
                     </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <!-- End of Flash messages -->
 
-        <form method="POST" action="/signup">
-            <input type="text" id="name" name="name" placeholder="Name" required><br>
-            <input type="date" id="dob" name="dob" required><br>
-            <input type="email" id="email" name="email" placeholder="Email" required><br>
-            <input type="password" id="password" name="password" placeholder="Password" required><br>
-            <input class="btn" type="submit" value="Sign Up">
-        </form>
+                    <div class="card-body">
+                        <!-- Flash messages -->
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    {% if category == "signup" %}
+                                        <div class="alert alert-danger">
+                                            {{ message }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                        <!-- End of Flash messages -->
+
+                        <form method="POST" action="/signup">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dob">Date of Birth</label>
+                                <input type="date" id="dob" name="dob" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                            </div>
+                            <input class="btn btn-primary btn-block" type="submit" value="Sign Up">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

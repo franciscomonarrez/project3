@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ClubCentral - My Community</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 p-3">
+                <h1>ClubCentral</h1>
+                <div class="list-group">
+                    <a href="/home" class="list-group-item list-group-item-action">Home</a>
+                    <a href="/community" class="list-group-item list-group-item-action active">My Community</a>
+                    <a href="/messages" class="list-group-item list-group-item-action">Messages</a>
+                    <a href="/notifications" class="list-group-item list-group-item-action">Notifications</a>
+                    <a href="/profile" class="list-group-item list-group-item-action">Profile</a>
+                    <a href="/calendar" class="list-group-item list-group-item-action">Calendar</a>
+                    <a href="/settings" class="list-group-item list-group-item-action">Settings</a>
+                    <a href="/logout" class="list-group-item list-group-item-action">Logout</a>
+                </div>
+            </div>
+
+            <div class="col-md-9 p-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>My Community</h2>
+                    </div>
+                    <div class="card-body">
+                        <h4>Clubs I've Joined</h4>
+                        <ul id="club-list" class="list-group">
+                            {% for club in clubs %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center" id="{{ club['name'] }}">
+                                    {{ club['name'].replace("_", " ").title() }}
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="dropOutClub('{{ club['name'] }}')">Drop Out</button>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function dropOutClub(clubName) {
+            if (confirm(`Are you sure you want to drop out of ${clubName.replace("_", " ").title()}?`)) {
+                // Make an AJAX request to the server to drop out of the club
+                $.ajax({
+                    type: "POST",
+                    url: "/drop_out",
+                    data: JSON.stringify({ clubName: clubName }),
+                    contentType: "application/json",
+                    success: function(response) {
+                        // Remove the club name from the list
+                        $("#" + clubName).remove();
+                        alert(response.message);
+                    },
+                    error: function(xhr, status, error) {
+                        alert("An error occurred while trying to drop out of the club.");
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
