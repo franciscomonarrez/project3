@@ -32,8 +32,18 @@
             transition: background-color 0.3s ease;
         }
         .btn-back:hover {
-            background-color: #0056b3;
+            background-color: green;
         }
+        .list-group-item.active, .btn-primary {
+            background-color: green;
+            border-color: green;
+        }
+    </style>
+    <style>
+    .list-group-item.active, .btn-primary {
+        background-color: green;
+        border-color: green;
+    }
     </style>
 </head>
 <body class="container py-5">
@@ -57,21 +67,236 @@
         <tbody id="calendar-body">
         </tbody>
     </table>
+        </table>
     <script>
+        /* ... */
+        let randomEvents = generateRandomEvents();
+
+        function generateRandomEvents() {
+            const events = ['Chess Club', 'Coding Study Group', 'Art Club Meetup', 'Dance Practice', 'Basketball Game', 'Mathematics Club', 'Game Night'];
+            let randomEvents = [];
+            for(let i = 0; i < 7; i++) {
+                let eventIndex = Math.floor(Math.random() * events.length);
+                let eventTime = Math.floor(Math.random() * 24).toString().padStart(2, '0') + ':00';
+                let eventDate = '2023-07-' + (23 + i).toString().padStart(2, '0');
+                randomEvents.push({date: eventDate, time: eventTime, title: events[eventIndex]});
+            }
+            return randomEvents;
+        }
+
+        function showRandomEvents(today, randomEvents) {
+            let weekTbl = document.getElementById("weekCalendar-body");
+
+            let weekStartDate = new Date(today);
+            weekStartDate.setDate(today.getDate() - today.getDay());
+
+            let date = new Date(weekStartDate);
+            let row = document.createElement("tr");
+            for (let i = 0; i < 7; i++) {
+                let cell = document.createElement("td");
+                
+                let eventText = document.createElement("div");
+                eventText.classList.add("event");
+                let paddedMonth = ("0" + (date.getMonth() + 1)).slice(-2);
+                let paddedDate = ("0" + date.getDate()).slice(-2);
+                let eventData = randomEvents.filter(event => event.date === `${date.getFullYear()}-${paddedMonth}-${paddedDate}`);
+                eventData.forEach(event => {
+                    let eventNode = document.createTextNode(`Random: ${event.time} - ${event.title}`);
+                    eventText.appendChild(eventNode);
+                    eventText.appendChild(document.createElement("br"));
+                });
+                cell.appendChild(eventText);
+                row.appendChild(cell);
+                date.setDate(date.getDate() + 1);
+            }
+            weekTbl.appendChild(row);
+        }
+
+        // To display random events
+        showRandomEvents(today, randomEvents);
+
+
+        let weeklyEvents = [
+            {date: '2023-07-23', time: '18:00', title: 'Chess Club'},
+            {date: '2023-07-24', time: '19:00', title: 'Coding Study Group'},
+            {date: '2023-07-25', time: '17:00', title: 'Art Club Meetup'},
+            {date: '2023-07-26', time: '16:00', title: 'Dance Practice'},
+            {date: '2023-07-27', time: '15:00', title: 'Basketball Game'},
+            {date: '2023-07-28', time: '14:00', title: 'Mathematics Club'},
+            {date: '2023-07-29', time: '20:00', title: 'Game Night'}
+        ];
+
+        showCalendar(currentMonth, currentYear, events);
+        showWeekCalendar(today, weeklyEvents);
+
+        function showWeekCalendar(today, weeklyEvents) {
+            let weekTbl = document.getElementById("weekCalendar-body");
+            weekTbl.innerHTML = "";
+            
+            let weekStartDate = new Date(today);
+            weekStartDate.setDate(today.getDate() - today.getDay());
+
+            let date = new Date(weekStartDate);
+            let row = document.createElement("tr");
+            for (let i = 0; i < 7; i++) {
+                let cell = document.createElement("td");
+                let cellText = document.createTextNode(date.getDate());
+                cell.appendChild(cellText);
+                
+                let eventText = document.createElement("div");
+                eventText.classList.add("event");
+                let paddedMonth = ("0" + (date.getMonth() + 1)).slice(-2);
+                let paddedDate = ("0" + date.getDate()).slice(-2);
+                let eventData = weeklyEvents.filter(event => event.date === `${date.getFullYear()}-${paddedMonth}-${paddedDate}`);
+                if (eventData.length > 0) {
+                    eventData.forEach(event => {
+                        let eventNode = document.createTextNode(`${event.time} - ${event.title}`);
+                        eventText.appendChild(eventNode);
+                        eventText.appendChild(document.createElement("br"));
+                    });
+                    cell.appendChild(eventText);
+                }
+                row.appendChild(cell);
+                date.setDate(date.getDate() + 1);
+            }
+            weekTbl.appendChild(row);
+        }
+
+        /* ... */
+    </script>
+
+<h2 class="mb-4" id="eventsTitle">Events this week</h2>
+<table id="events" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Day</th>
+            <th>Event</th>
+            <th>Time</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody id="events-body">
+        <tr>
+            <td>Monday</td>
+            <td>Computer Science Club: Coding Workshop</td>
+            <td>2:00 PM - 4:00 PM</td>
+            <td>Lab 4</td>
+        </tr>
+        <tr>
+            <td>Monday</td>
+            <td>Art Club: Life Drawing</td>
+            <td>5:00 PM - 7:00 PM</td>
+            <td>Room 101, Arts Building</td>
+        </tr>
+        <tr>
+            <td>Tuesday</td>
+            <td>Photography Club: Outdoor Photo Walk</td>
+            <td>3:00 PM - 5:00 PM</td>
+            <td>College Main Gate</td>
+        </tr>
+        <tr>
+            <td>Tuesday</td>
+            <td>Debate Club: Practice Session</td>
+            <td>6:00 PM - 8:00 PM</td>
+            <td>Room 305, Library Building</td>
+        </tr>
+        <tr>
+            <td>Wednesday</td>
+            <td>Literature Club: Book Discussion - '1984'</td>
+            <td>4:00 PM - 6:00 PM</td>
+            <td>Room 206, Library Building</td>
+        </tr>
+        <tr>
+            <td>Wednesday</td>
+            <td>Chess Club: Chess Tournament</td>
+            <td>7:00 PM - 9:00 PM</td>
+            <td>Common Room</td>
+        </tr>
+        <tr>
+            <td>Thursday</td>
+            <td>Chess Club: Chess Tournament</td>
+            <td>1:00 PM - 3:00 PM</td>
+            <td>Common Room</td>
+        </tr>
+        <tr>
+            <td>Thursday</td>
+            <td>Music Club: Jazz Night</td>
+            <td>5:00 PM - 7:00 PM</td>
+            <td>Auditorium</td>
+        </tr>
+        <tr>
+            <td>Friday</td>
+            <td>Eco Club: Campus Cleanup</td>
+            <td>10:00 AM - 12:00 PM</td>
+            <td>College Grounds</td>
+        </tr>
+        <tr>
+            <td>Friday</td>
+            <td>Business Club: Networking Session</td>
+            <td>6:00 PM - 8:00 PM</td>
+            <td>Room 102, Business Building</td>
+        </tr>
+        <tr>
+            <td>Saturday</td>
+            <td>Music Club: Jam Session</td>
+            <td>4:00 PM - 6:00 PM</td>
+            <td>Music Room</td>
+        </tr>
+        <tr>
+            <td>Saturday</td>
+            <td>Drama Club: Play Rehearsal</td>
+            <td>7:00 PM - 9:00 PM</td>
+            <td>Auditorium</td>
+        </tr>
+        <tr>
+            <td>Sunday</td>
+            <td>Photography Club: Photo Editing Class</td>
+            <td>3:00 PM - 5:00 PM</td>
+            <td>Computer Lab</td>
+        </tr>
+        <tr>
+            <td>Sunday</td>
+            <td>Cooking Club: International Cuisine Workshop</td>
+            <td>6:00 PM - 8:00 PM</td>
+            <td>Home Economics Room</td>
+        </tr>
+    </tbody>
+</table>
+
+
+    <script>
+
         let today = new Date();
         let currentMonth = today.getMonth();
         let currentYear = today.getFullYear();
 
-        let monthAndYear = document.getElementById("monthAndYear");
-        showCalendar(currentMonth, currentYear);
+        let events = [
+            {date: '2023-07-26', time: '14:00', title: 'Math Club Meeting'},
+            {date: '2023-07-27', time: '18:00', title: 'Book Reading Session'},
+            {date: '2023-07-28', time: '10:00', title: 'Chess Tournament'},
+            {date: '2023-07-29', time: '15:00', title: 'Programming Workshop'},
+            {date: '2023-07-30', time: '13:00', title: 'Photography Club Meetup'},
+            {date: '2023-07-31', time: '11:00', title: 'Philosophy Debate'},
+            {date: '2023-08-01', time: '19:00', title: 'Film Club Screening'},
+            {date: '2023-08-02', time: '16:00', title: 'Basketball Game'},
+            {date: '2023-08-03', time: '09:00', title: 'Yoga Class'},
+            {date: '2023-08-04', time: '14:00', title: 'Music Club Jam Session'},
+            {date: '2023-08-05', time: '12:00', title: 'Food Festival'},
+            {date: '2023-08-06', time: '17:00', title: 'Poetry Reading'},
+            // Add more events as necessary
+        ];
 
-        function showCalendar(month, year) {
+
+        let monthAndYear = document.getElementById("monthAndYear");
+        showCalendar(currentMonth, currentYear, events);
+
+        function showCalendar(month, year, events) {
             let firstDay = (new Date(year, month)).getDay();
             let daysInMonth = 32 - new Date(year, month, 32).getDate();
             let tbl = document.getElementById("calendar-body");
             tbl.innerHTML = "";
-            let displayMonth = new Date(year, month);  // add this line
-            monthAndYear.innerHTML = displayMonth.toLocaleString('default', { month: 'long' }) + " " + year; // change this line
+            let displayMonth = new Date(year, month); 
+            monthAndYear.innerHTML = displayMonth.toLocaleString('default', { month: 'long' }) + " " + year; 
 
             let date = 1;
             for (let i = 0; i < 6; i++) {
@@ -94,10 +319,23 @@
                             cell.classList.add("today");
                         }
                         cell.appendChild(cellText);
+
+                        // Add events to the cell
+                        let eventText = document.createElement("div");
+                        eventText.classList.add("event");
+                        let eventData = events.filter(event => event.date === `${year}-${month+1}-${date}`);
+                        eventData.forEach(event => {
+                            let eventNode = document.createTextNode(`${event.time} - ${event.title}`);
+                            eventText.appendChild(eventNode);
+                            eventText.appendChild(document.createElement("br"));
+                        });
+                        cell.appendChild(eventText);
+
                         row.appendChild(cell);
                         date++;
                     }
                 }
+
                 tbl.appendChild(row);
             }
         }
@@ -109,7 +347,7 @@
             } else {
                 currentMonth--;
             }
-            showCalendar(currentMonth, currentYear);
+            showCalendar(currentMonth, currentYear, events);
         });
 
         document.getElementById("next").addEventListener("click", function() {
@@ -119,9 +357,10 @@
             } else {
                 currentMonth++;
             }
-            showCalendar(currentMonth, currentYear);
+            showCalendar(currentMonth, currentYear, events);
         });
     </script>
+
     <button class="btn-back" onclick="window.location.href='{{ url_for('home') }}';">Back to Home</button>
 </body>
 </html>

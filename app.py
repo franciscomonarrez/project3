@@ -143,6 +143,10 @@ def delete_account():
 def golf_club():
     return render_template('clubs/golf_club.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')  # Replace with your about page template name
+
 @app.route('/surf_club')
 def surf_club():
     return render_template('clubs/surf_club.html')
@@ -158,6 +162,19 @@ def african_american_club():
 @app.route('/chess_club')
 def chess_club():
     return render_template('clubs/chess_club.html')
+
+@app.route('/forgotpassword', methods=['GET', 'POST'])
+def forgotpassword():
+    if request.method == 'POST':
+        # handle the POST request here. This is where you would typically
+        # validate the email and send a password reset link.
+        email = request.form.get('email')
+        # code to send password reset email goes here...
+        return "Link Sent"
+
+    # render the forgot password page
+    return render_template('forgotpassword.html')
+
 
 @app.route('/photography_club')
 def photography_club():
@@ -175,6 +192,10 @@ def music_club():
 def robotics_club():
     return render_template('clubs/robotics_club.html')
 
+@app.route('/user_agreement')
+def user_agreement():
+    return render_template('user_agreement.html')  
+
 @app.route('/debate_club')
 def debate_club():
     return render_template('clubs/debate_club.html')
@@ -182,6 +203,35 @@ def debate_club():
 @app.route('/volunteering_club')
 def volunteering_club():
     return render_template('clubs/volunteering_club.html')
+
+@app.route('/copyright_policy')
+def copyright_policy():
+    return render_template('copyright_policy.html')
+
+@app.route('/profile', methods=['POST'])
+def update_profile():
+    # get the uploaded file
+    file = request.files['profile_pic']
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        # update user's profile picture in database here
+        # redirect to the profile page or somewhere else on successful update
+        return redirect(url_for('profile'))
+    else:
+        # handle invalid file here
+        return "Invalid file"
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/community_guidelines')
+def community_guidelines():
+    return render_template('community_guidelines.html')
+
 
 @app.route('/programming_club')
 def programming_club():

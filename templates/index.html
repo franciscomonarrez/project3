@@ -3,18 +3,34 @@
 <head>
     <title>GreenSpace</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+    .list-group-item.active, .btn-primary {
+        background-color: green;
+        border-color: green;
+    }
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+    }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-6 p-3">
+            <div class="col-sm-8 p-6" style="min-height: 1200px;">
                 <div class="card">
                     <div class="card-header">
                         <h1 class="text-center">Welcome to GreenSpace!</h1>
+                        <div class="text-center">
+                            <img src="https://content.gallup.com/origin/gallupinc/GallupSpaces/Production/Cms/TGBCMS/iy1ex3cookmf9cme5qlnxa.jpg" alt="Welcome Image" style="max-width:100%;">
+                        </div>
                     </div>
                     <div class="card-body">
                         <p class="text-center">Connect with school clubs and organizations, participate in events, share your thoughts, and enjoy the school community like never before.</p>
-                        <div class="row mt-4">
+                        <div class="row mt-12">
                             <div class="col-md-6">
                                 <a href="/signup" class="btn btn-primary btn-block">Sign Up</a>
                             </div>
@@ -22,9 +38,17 @@
                                 <a href="/login" class="btn btn-primary btn-block">Login</a>
                             </div>
                         </div>
+                        <div class="row mt-12 text-center">
+                            <div class="col-md-12">
+                                <a href="/forgotpassword" class="btn btn-link">Forgot my password</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="footer">
+            <p>Founded in 2023 | <a href="/about">About</a></p>
         </div>
     </div>
 </body>

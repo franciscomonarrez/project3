@@ -4,6 +4,17 @@
     <title>GreenSpace - Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
+    <style>
+    .list-group-item.active, .btn-primary {
+        background-color: green;
+        border-color: green;
+    }
+    #profile_pic {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+    }
+    </style>
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -25,9 +36,14 @@
                 <div class="card">
                     <div class="card-header">
                         <h2>Profile: {{ user.name }}</h2>
+                        <img id="profile_pic" src="{{ user.profile_pic }}" alt="Profile Picture">
                     </div>
                     <div class="card-body">
-                        <form action="/profile" method="POST">
+                        <form action="/profile" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="profile_pic">Profile Picture</label>
+                                <input type="file" name="profile_pic" id="upload_profile_pic" class="form-control" onchange="loadImage(event)" accept="image/*">
+                            </div>
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" name="name" id="name" class="form-control" value="{{ user.name }}" required>
@@ -58,5 +74,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function loadImage(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('profile_pic');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 </body>
 </html>

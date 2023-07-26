@@ -5,6 +5,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+    <style>
+    .list-group-item.active, .btn-primary {
+        background-color: green;
+        border-color: green;
+    }
+    </style>
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -37,6 +43,14 @@
                                 </li>
                             {% endfor %}
                         </ul>
+                    <li class="list-group-item d-flex justify-content-between align-items-center" id="golf_club">
+                        Golf Club
+                        <button type="button" class="btn btn-danger btn-sm" onclick="dropOutClub('golf_club')">Drop Out</button>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center" id="soccer_club">
+                        Soccer Club
+                        <button type="button" class="btn btn-danger btn-sm" onclick="dropOutClub('soccer_club')">Drop Out</button>
+                    </li>
                     </div>
                 </div>
             </div>
@@ -53,11 +67,12 @@
                     data: JSON.stringify({ clubName: clubName }),
                     contentType: "application/json",
                     success: function(response) {
-                        // Remove the club name from the list
+                        console.log('Success response:', response); // add this line
                         $("#" + clubName).remove();
                         alert(response.message);
                     },
                     error: function(xhr, status, error) {
+                        console.log('Error response:', xhr, status, error); // add this line
                         alert("An error occurred while trying to drop out of the club.");
                     }
                 });

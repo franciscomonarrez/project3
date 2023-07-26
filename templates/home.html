@@ -3,6 +3,12 @@
 <head>
     <title>GreenSpace - Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+    .list-group-item.active, .btn-primary {
+        background-color: green;
+        border-color: green;
+    }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -10,6 +16,7 @@
         <div class="row">
             <div class="col-md-3 p-3">
                 <h1>GreenSpace</h1>
+                <img src="https://www.pngplay.com/wp-content/uploads/6/Community-Logo-Background-PNG-Image.png" alt="Greenspace Logo" style="width:50%; height:auto;">
                 <div class="list-group">
                     <a href="/home" class="list-group-item list-group-item-action active">Home</a>
                     <a href="/community" class="list-group-item list-group-item-action">My Community</a>
@@ -20,6 +27,7 @@
                     <a href="/settings" class="list-group-item list-group-item-action">Settings</a>
                     <a href="/logout" class="list-group-item list-group-item-action">Logout</a>
                 </div>
+                
 
                 <div class="recommendations mt-4">
                     <h3>Club and Organization Recommendations</h3>
@@ -245,6 +253,7 @@
     </div>
 
     <script>
+
         $(document).ready(function() {
             $('#post_form').on('submit', function(e) {
                 e.preventDefault();
@@ -253,16 +262,52 @@
                 if (postContent) {
                     $.post('/post', { content: postContent }, function(data) {
                         var newPost = '<div class="card">' +
-                                          '<div class="card-body">' +
-                                              '<h5 class="card-title">' + data.author + '</h5>' +
-                                              '<p class="card-text">' + data.content + '</p>' +
-                                          '</div>' +
-                                      '</div>';
+                                        '<div class="card-body">' +
+                                            '<h5 class="card-title">' + data.author + '</h5>' +
+                                            '<p class="card-text">' + data.content + '</p>' +
+                                            '<button type="button" class="btn btn-primary btn-sm like-btn">Like</button>' + +
+                                            '<span class="like-count">' + data.likes + '</span> Likes' +
+                                            '<div class="comments mt-2">' +
+                                            '</div>' +
+                                            '<form onsubmit="return false;">' +
+                                                '<div class="form-group">' +
+                                                    '<input type="text" class="form-control comment-input" placeholder="Add a comment...">' +
+                                                '</div>' +
+                                                '<button type="button" class="btn btn-primary btn-sm comment-btn">Comment</button>' +
+                                            '</form>' +
+                                        '</div>' +
+                                    '</div>';
                         $('.feed').prepend(newPost);
                         $('#post_form')[0].reset();
                     });
                 }
             });
+            
+            // Listen for click events on dynamically added like buttons
+            $(document).on('click', '.like-btn', function() {
+                var likeCountSpan = $(this).siblings('.like-count');
+                var currentLikes = parseInt(likeCountSpan.text());
+
+                if (!$(this).hasClass('liked')) {
+                    var newLikes = currentLikes + 1;
+                    likeCountSpan.text(newLikes);
+                    $(this).addClass('liked');
+                }
+            });
+
+            // Listen for click events on dynamically added comment buttons
+            $(document).on('click', '.comment-btn', function() {
+                var commentInput = $(this).siblings('.form-group').find('.comment-input');
+                var commentContent = commentInput.val().trim();  // trim whitespace
+
+                if (commentContent) {
+                    var newComment = '<p><strong>User ' + (Math.floor(Math.random() * 10) + 1) + ':</strong> ' + commentContent + '</p>';
+
+                    $(this).siblings('.comments').append(newComment);
+                    commentInput.val('');
+                }
+            });
+
         });
 
         function processClub(clubId, join) {
@@ -279,6 +324,233 @@
                 alert('Successfully processed club!');
             });
         }
+                $(document).ready(function() {
+            $('#post_form').on('submit', function(e) {
+                e.preventDefault();
+
+                var postContent = $('#post_content').val();
+                if (postContent) {
+                    $.post('/post', { content: postContent }, function(data) {
+                        var newPost = '<div class="card">' +
+                                          '<div class="card-body">' +
+                                              '<h5 class="card-title">' + data.author + '</h5>' +
+                                              '<p class="card-text">' + data.content + '</p>' +
+                                              '<button type="button" class="btn btn-primary btn-sm" onclick="likePost(\'' + data.id + '\')">Like</button>' +
+                                              '<span id="' + data.id + '_like_count">' + data.likes + '</span> Likes' +
+                                              '<div class="comments mt-2" id="' + data.id + '_comments">' +
+                                              '</div>' +
+                                              '<form onsubmit="return false;">' +
+                                                  '<div class="form-group">' +
+                                                      '<input type="text" class="form-control" placeholder="Add a comment..." id="' + data.id + '_comment_input">' +
+                                                  '</div>' +
+                                                  '<button type="button" class="btn btn-primary btn-sm" onclick="addComment(\'' + data.id + '\')">Comment</button>' +
+                                              '</form>' +
+                                          '</div>' +
+                                      '</div>';
+                        $('.feed').prepend(newPost);
+                        $('#post_form')[0].reset();
+                    });
+                }
+            });
+        });
+
+         // Function to generate random names for users
+        function getRandomUserName() {
+            var userNames = ['Alice', 'Bob', 'Charlie', 'David', 'Ella', 'Frank', 'Grace', 'Henry', 'Isabella', 'Jack'];
+            return userNames[Math.floor(Math.random() * userNames.length)];
+        }
+
+        // Function to generate random post content for clubs
+        function getRandomPostContent(club) {
+            var clubPosts = [
+                "We had an amazing day at the " + club + " today! The weather was perfect for our activities.",
+                "Join us this weekend at the " + club + " for some exciting games and fun!",
+                "Here's a sneak peek of our upcoming event at the " + club + ". Don't miss it!",
+                "We're thrilled to announce a new partnership with a local business to support the " + club + " community.",
+                "What a great time we had at the " + club + " gathering last night. Thanks to all who joined!",
+                "Looking for new members to join our " + club + ". If you're interested, let us know!",
+                "We're organizing a charity event at the " + club + ". Let's make a difference together!",
+                "Check out this awesome picture from our recent " + club + " event!",
+                "Need some motivation? Our " + club + " members are always there to support each other!",
+                "Just sharing some useful tips for our fellow " + club + " enthusiasts. Enjoy!",
+                "Let's get active and have some fun at the " + club + ". See you there!",
+                "A big shoutout to our dedicated " + club + " team. You guys are amazing!",
+                "We're excited to welcome new members to our " + club + " family. Join us today!",
+                "Had a blast at the " + club + " tournament. Congratulations to all the winners!",
+                "Looking forward to our upcoming " + club + " meetup. Save the date!",
+                "Who's up for a friendly competition at the " + club + "? Let's challenge each other!",
+                "Share your favorite " + club + " moments and memories with us. #memories",
+                "Did you know? Our " + club + " is celebrating its 10th anniversary this month!",
+                "Let's improve our skills together. Join our " + club + " workshop this weekend!",
+                "We're passionate about what we do at the " + club + ". Come and be a part of it!",
+            ];
+
+            return clubPosts[Math.floor(Math.random() * clubPosts.length)];
+        }
+        // Function to shuffle an array using Fisher-Yates algorithm
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+        // Helper function to generate random comment content
+        function getRandomCommentContent(userName) {
+            var commentTemplates = [
+                'I totally agree with this!',
+                'Wow, that sounds like a lot of fun!',
+                'I wish I could have been there to witness that!',
+                'Great post! Keep up the good work.',
+                'Could you share more details about that?',
+                'This is really interesting!',
+                'I never thought about it that way.',
+                'You have a unique perspective on this.',
+                'Thanks for sharing!',
+                'Keep it coming, I love reading your posts!',
+                'Your posts always brighten my day!',
+                'This post deserves more likes!',
+                'I can relate to this on so many levels.',
+                'You have a talent for expressing ideas.',
+                'Mind if I share this with my friends?',
+                'This deserves to go viral!',
+                'Everyone should read this post!',
+                'Your posts are always so thought-provoking.',
+                'Thanks for bringing up this topic.',
+                'This is why I love this community!',
+                'Your posts are like a breath of fresh air.',
+                'You never fail to impress me with your posts.',
+                'Your insights are always on point!',
+                'I appreciate the effort you put into your posts.',
+                'Your posts make me see things from a new perspective.',
+                'This is exactly what I needed to read today!',
+                'You have a real talent for writing.',
+                'Your posts are so relatable.',
+                'I admire your dedication to this community.',
+                'This post really made me think.',
+                'Your posts always spark interesting discussions.',
+                'I wish more people wrote like you.',
+                'Your creativity knows no bounds!',
+                'Thanks for adding value to our community!',
+            ];
+            return commentTemplates[Math.floor(Math.random() * commentTemplates.length)];
+        }
+
+        // Function to simulate random posts, comments, and likes
+        function generateRandomData() {
+            var clubs = ['Golf Club', 'Surf Club', 'Chess Club', 'Tennis Club', 'Book Club', 'Fitness Club'];
+            shuffleArray(clubs);
+            var posts = [];
+
+            for (var i = 0; i < clubs.length; i++) {
+                shuffleArray(clubs);
+                var clubPosts = [];
+                for (var j = 0; j < 5; j++) {
+                    shuffleArray(clubs);
+                    var postId = clubs[i] + '_post_' + j;
+                    var post = {
+                        id: postId,
+                        author: getRandomUserName(),
+                        content: getRandomPostContent(clubs[i]),
+                        likes: Math.floor(Math.random() * 100),
+                        comments: [],
+                    };
+
+                    // Generate random comments for each post
+                    var numComments = Math.floor(Math.random() * 5);
+                    for (var k = 0; k < numComments; k++) {
+                        var commentId = postId + '_comment_' + k;
+                        var commentAuthor = getRandomUserName();
+                        var commentContent = getRandomCommentContent(commentAuthor);
+                        var comment = {
+                            id: commentId,
+                            author: commentAuthor,
+                            content: commentContent,
+                        };
+                        post.comments.push(comment);
+                    }
+
+                    clubPosts.push(post);
+                }
+                posts.push(clubPosts);
+            }
+
+            return posts;
+        }
+
+        // Function to add random posts to the feed
+        function addRandomPostsToFeed() {
+            var randomPosts = generateRandomData();
+
+            for (var i = 0; i < randomPosts.length; i++) {
+                var clubPosts = randomPosts[i];
+
+                for (var j = 0; j < clubPosts.length; j++) {
+                    var postId = clubPosts[j].id;
+                    var newPost = '<div class="card">' +
+                                    '<div class="card-body">' +
+                                        '<h5 class="card-title">' + clubPosts[j].author + '</h5>' +
+                                        '<p class="card-text">' + clubPosts[j].content + '</p>' +
+                                        '<button type="button" class="btn btn-primary btn-sm" id="' + postId + '_like_btn" onclick="likePost(\'' + postId + '\')">Like</button>' +
+                                        '<span id="' + postId + '_like_count">' + clubPosts[j].likes + '</span> Likes' +
+                                        '<div class="comments mt-2" id="' + postId + '_comments">';
+
+                    for (var k = 0; k < clubPosts[j].comments.length; k++) {
+                        var commentId = clubPosts[j].comments[k].id;
+                        var comment = '<p><strong>' + clubPosts[j].comments[k].author + ':</strong> ' + clubPosts[j].comments[k].content + '</p>';
+                        newPost += comment;
+                    }
+
+                    newPost += '</div>' +
+                                '<form onsubmit="return false;">' +
+                                    '<div class="form-group">' +
+                                        '<input type="text" class="form-control" placeholder="Add a comment..." id="' + postId + '_comment_input">' +
+                                    '</div>' +
+                                    '<button type="button" class="btn btn-primary btn-sm" onclick="addComment(\'' + postId + '\')">Comment</button>' +
+                                '</form>' +
+                            '</div>' +
+                        '</div>';
+
+                    $('.feed').prepend(newPost);
+                }
+            }
+        }
+
+
+        var likedPosts = [];
+
+        // Function to increment likes count
+        function likePost(postId) {
+            if (likedPosts.includes(postId)) {
+                alert("You've already liked this post.");
+            } else {
+                var likeElement = document.getElementById(postId + '_like_count');
+                var currentLikes = parseInt(likeElement.innerText);
+                likeElement.innerText = currentLikes + 1;
+                likedPosts.push(postId);
+            }
+        }
+        var user = {
+            name: "You"
+            // other properties...
+        };        
+
+        // Function to add a comment to a post
+        function addComment(postId) {
+            var commentInput = document.getElementById(postId + '_comment_input');
+            var commentContent = commentInput.value;
+            if(commentContent){
+                var newComment = '<p><strong>' + user.name + ':</strong> ' + commentContent + '</p>';
+                document.getElementById(postId + '_comments').innerHTML += newComment;
+                commentInput.value = '';
+            }
+        }
+
+
+        // Add random posts to the feed on page load
+        addRandomPostsToFeed();
+    </script>
     </script>
 </body>
 </html>
